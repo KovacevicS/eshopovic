@@ -23,9 +23,9 @@ const Tabela = ({ proizvodi = [], updateProizvod }) => { // Postavi podrazumevan
         <table>
           <thead>
             <tr>
-              <th>Ime zadatka</th>
-              <th>Opis zadatka</th>
-              <th>Cena zadatka</th>
+              <th>Ime proizvoda</th>
+              <th>Opis proizvoda</th>
+              <th>Cena proizvoda</th>
               <th>Akcije</th>
             </tr>
           </thead>
