@@ -1,0 +1,87 @@
+.proizvodi-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-container input {
+    padding: 10px;
+    font-size: 16px;
+    width: 48%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.proizvodi-lista {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.proizvod-kartica {
+    width: 30%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.proizvod-popust {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #b30000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.proizvod-slika {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.proizvod-ime {
+    margin: 15px 0 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.proizvod-cena-stara {
+    text-decoration: line-through;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.proizvod-cena-nova {
+    font-size: 20px;
+    color: #b30000;
+    font-weight: bold;
+}
+
+.proizvod-vise-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #b30000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.proizvod-vise-btn:hover {
+    background: #800000;
+}
