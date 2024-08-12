@@ -1,68 +1,63 @@
 import React, { useState } from 'react';
-import Tabela from './Proizvodi'; // Ako je Tabela.js u istom direktorijumu
+import axios from 'axios';
 
 const DodajProizvod = () => {
     const [imeProizvoda, setImeProizvoda] = useState('');
     const [opisProizvoda, setOpisProizvoda] = useState('');
     const [cenaProizvoda, setCenaProizvoda] = useState('');
     const [slikaProizvoda, setSlikaProizvoda] = useState('');
-    const [proizvodi, setProizvodi] = useState([]);
+    const [poruka, setPoruka] = useState('');
 
-    const handlePromenaImena = (e) => {
-        setImeProizvoda(e.target.value);
-    };
-
-    const handlePromenaOpisa = (e) => {
-        setOpisProizvoda(e.target.value);
-    };
-
-    const handlePromenaCene = (e) => {
-        setCenaProizvoda(e.target.value);
-    };
-
-    const dodajProizvode = () => {
-        if (imeProizvoda.trim() && opisProizvoda.trim()) {
-            const noviProizvod = { ime: imeProizvoda, opis: opisProizvoda, cena: cenaProizvoda, slika: slikaProizvoda };
-            setProizvodi([...proizvodi, noviProizvod]);
+    const dodajProizvod = () => {
+        axios.post('http://localhost:5000/api/proizvodi', {
+            ime: imeProizvoda,
+            opis: opisProizvoda,
+            cena: cenaProizvoda,
+            slika: slikaProizvoda
+        })
+        .then(response => {
+            setPoruka('Proizvod je uspešno dodat!');
             setImeProizvoda('');
             setOpisProizvoda('');
             setCenaProizvoda('');
             setSlikaProizvoda('');
-        }
-    };
-
-    const updateProizvod = (index, newName, newDescription, newCena) => {
-        const azuriraniProizvodi = proizvodi.map((proizvod, i) =>
-            i === index ? { ime: newName, opis: newDescription, cena: newCena } : proizvod
-        );
-        setProizvodi(azuriraniProizvodi);
+        })
+        .catch(error => {
+            setPoruka('Greška prilikom dodavanja proizvoda: ' + error.message);
+        });
     };
 
     return (
         <div>
-            <h1>Proizvodi</h1>
+            <h2>Dodaj novi proizvod</h2>
             <input
                 type="text"
                 placeholder="Ime proizvoda"
                 value={imeProizvoda}
-                onChange={handlePromenaImena}
+                onChange={e => setImeProizvoda(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Opis proizvoda"
                 value={opisProizvoda}
-                onChange={handlePromenaOpisa}
+                onChange={e => setOpisProizvoda(e.target.value)}
             />
             <input
                 type="number"
                 placeholder="Cena proizvoda"
                 value={cenaProizvoda}
-                onChange={handlePromenaCene}
+                onChange={e => setCenaProizvoda(e.target.value)}
             />
-            <button onClick={dodajProizvode}>Dodaj Proizvod</button>
-            <Tabela proizvodi={proizvodi} updateProizvod={updateProizvod} />
+            <input
+                type="text"
+                placeholder="URL slike proizvoda"
+                value={slikaProizvoda}
+                onChange={e => setSlikaProizvoda(e.target.value)}
+            />
+            <button onClick={dodajProizvod}>Dodaj proizvod</button>
+            {poruka && <p>{poruka}</p>}
         </div>
     );
-}
+};
 
 export default DodajProizvod;
