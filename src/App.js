@@ -8,10 +8,15 @@ import EditProizvoda from './Proizvodi/EditProizvoda';
 import DeleteProizvoda from './Proizvodi/DeleteProizvoda';
 import Korpa from './components/Korpa';
 import Navbar from './components/Navbar';
-
+import LoginPage from './login/LoginPage';
+import SignUpPage from './login/SignUpPage';
+import DodajKorisnika from './login/Dodajkorisnika';
+import { AuthProvider } from './login/auth';
 function App() {
     return (
         <Router>
+        <AuthProvider>
+       
             <Navbar />
             <Routes>
                 <Route path="/" element={<Pocetna />} />
@@ -20,7 +25,12 @@ function App() {
                 <Route path="/edit-proizvoda/:id" element={<EditProizvoda />} />
                 <Route path="/delete-proizvoda/:id" element={<DeleteProizvoda />} />
                 <Route path="/korpa" element={<Korpa />} />
+                <Route path="/login" element={<LoginPage/>} />
+                <Route path="/Signup" element={<SignUpPage/>}/>
+                <Route path="/Dodajkorisnika" element={<DodajKorisnika/>}/>
             </Routes>
+        
+        </AuthProvider>
         </Router>
     );
 }

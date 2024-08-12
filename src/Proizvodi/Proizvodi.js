@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Proizvodi.css'; // Povezivanje CSS fajla
+import PropTypes from 'prop-types';
 
-const Tabela = ({ proizvodi = [{ime:"patike", cena:"15000", opis:"dobre patike",slika:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE9-2yTBhji-ruZOZhP7GVt7gAKJT1071asA&s"},
-  {ime:"majica", cena:"5000", opis: "dodjos majica", slika:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVma2-6Nuct93gCsgIq6X63_EPJWpRgHRC1w&s"}], updateProizvod }) => { 
+const Tabela = ({ proizvodi = [], updateProizvod }) => { // Default value for proizvodi
     const [editingIndex, setEditingIndex] = useState(null);
-    const [editedProizvodkName, setEditedProizvodName] = useState('');
+    const [editedProizvodName, setEditedProizvodName] = useState('');
     const [editedProizvodDescription, setEditedProizvodDescription] = useState('');
     const [editedProizvodCena, setEditedProizvodCena] = useState('');
 
@@ -15,9 +16,20 @@ const Tabela = ({ proizvodi = [{ime:"patike", cena:"15000", opis:"dobre patike",
         setEditedProizvodCena(proizvod.cena);
     };
 
-    const handleSacuvaj = (index) => {
-        updateProizvod(index, editedProizvodkName, editedProizvodDescription, editedProizvodCena);
-        setEditingIndex(null);
+    const handleSacuvaj = async (index) => {
+        const updatedProizvod = {
+            ime: editedProizvodName,
+            opis: editedProizvodDescription,
+            cena: editedProizvodCena,
+        };
+
+        try {
+            await axios.put(`http://localhost:5000/api/proizvodi/${proizvodi[index].id}`, updatedProizvod); // URL za ažuriranje proizvoda
+            updateProizvod(index, updatedProizvod.ime, updatedProizvod.opis, updatedProizvod.cena);
+            setEditingIndex(null);
+        } catch (error) {
+            console.error('Greška pri ažuriranju proizvoda:', error);
+        }
     };
 
     return (
@@ -28,7 +40,7 @@ const Tabela = ({ proizvodi = [{ime:"patike", cena:"15000", opis:"dobre patike",
                         <>
                             <input
                                 type="text"
-                                value={editedProizvodkName}
+                                value={editedProizvodName}
                                 onChange={(e) => setEditedProizvodName(e.target.value)}
                                 className="proizvod-input"
                             />
@@ -49,7 +61,7 @@ const Tabela = ({ proizvodi = [{ime:"patike", cena:"15000", opis:"dobre patike",
                     ) : (
                         <>
                             <h3 className="proizvod-ime">{proizvod.ime}</h3>
-                            <img src={proizvod.slika}/>
+                            <img src={proizvod.slika} alt={proizvod.ime} />
                             <p className="proizvod-opis">{proizvod.opis}</p>
                             <p className="proizvod-cena">{proizvod.cena} RSD</p>
                             <button onClick={() => handleEdit(index, proizvod)} className="uredi-button">Uredi</button>
@@ -60,6 +72,11 @@ const Tabela = ({ proizvodi = [{ime:"patike", cena:"15000", opis:"dobre patike",
             ))}
         </div>
     );
+};
+
+Tabela.propTypes = {
+    proizvodi: PropTypes.array,
+    updateProizvod: PropTypes.func.isRequired,
 };
 
 export default Tabela;
