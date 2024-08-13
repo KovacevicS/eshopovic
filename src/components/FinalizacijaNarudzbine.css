@@ -1,0 +1,55 @@
+/* Osnovni stilovi za finalizaciju narudžbine */
+.finalizacija-narudzbine-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.finalizacija-narudzbine-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.finalizacija-narudzbine-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.finalizacija-narudzbine-container p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.finalizacija-narudzbine-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.finalizacija-narudzbine-container li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.finalizacija-narudzbine-container button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.finalizacija-narudzbine-container button:hover {
+    background-color: #0056b3;
+}

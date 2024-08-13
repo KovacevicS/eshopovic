@@ -1,0 +1,49 @@
+/* src/components/ProizvodDetalji.css */
+.proizvod-detalji-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.proizvod-slika {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.proizvod-ime {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.proizvod-opis,
+.proizvod-cena {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.dodaj-u-korpu-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.dodaj-u-korpu-button:hover {
+    background-color: #218838;
+}
+
+.nazad-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.nazad-button:hover {
+    background-color: #0056b3;
+}

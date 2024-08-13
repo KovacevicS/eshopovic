@@ -1,35 +1,33 @@
-// src/components/Korpa.js
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Korpa = () => {
-    const [korpa, setKorpa] = useState([]);
+const Korpa = ({ korpa, ukloniIzKorpe }) => {
+    const navigate = useNavigate();
 
     const handleRemove = (id) => {
-        setKorpa(korpa.filter(proizvod => proizvod.id !== id));
-    };
-
-    const handleAddMore = () => {
-        // Navigacija na stranicu sa proizvodima
-        // Možemo koristiti `useNavigate` iz React Router-a
+        ukloniIzKorpe(id);
     };
 
     const handleCheckout = () => {
-        // Logika za plaćanje
-        console.log('Nastavi na plaćanje');
+        // Navigacija na stranicu za plaćanje
+        navigate('/checkout');
     };
 
     return (
         <div>
             <h1>Vaša Korpa</h1>
-            <ul>
-                {korpa.map(proizvod => (
-                    <li key={proizvod.id}>
-                        {proizvod.naziv} - {proizvod.cena} RSD
-                        <button onClick={() => handleRemove(proizvod.id)}>Ukloni</button>
-                    </li>
-                ))}
-            </ul>
-            <button onClick={handleAddMore}>Dodaj još proizvoda</button>
+            {korpa.length === 0 ? (
+                <p>Vaša korpa je prazna.</p>
+            ) : (
+                <ul>
+                    {korpa.map(proizvod => (
+                        <li key={proizvod.id}>
+                            {proizvod.ime} - {proizvod.cena} RSD
+                            <button onClick={() => handleRemove(proizvod.id)}>Ukloni</button>
+                        </li>
+                    ))}
+                </ul>
+            )}
             <button onClick={handleCheckout}>Nastavi na plaćanje</button>
         </div>
     );
