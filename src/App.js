@@ -16,6 +16,7 @@ import { AuthProvider } from './login/auth';
 import ProizvodDetalji from './Proizvodi/ProizvodDetalji';
 import Checkout from './components/Checkout';
 import FinalizacijaNarudzbine from './components/FinalizacijaNarudzbine';
+import AdminProizvodi from './Proizvodi/AdminProzivodi';
 
 function App() {
     const [korpa, setKorpa] = useState([]);
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/proizvodi/:id" element={<ProizvodDetalji dodajUKorpu={dodajUKorpu} />} />
                 <Route path="/checkout" element={<Checkout korpa={korpa} />} />
                 <Route path="/zavrsi" element={<FinalizacijaNarudzbine/>}/>
+                <Route path="/adminproizvodi" element={<AdminProizvodi/>}/>
             </Routes>
         
         </AuthProvider>

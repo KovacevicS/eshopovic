@@ -21,7 +21,10 @@ const Navbar = () => {
             <li><Link to="/proizvodi">Proizvodi</Link></li>
             <li><Link to="/korpa">Korpa</Link></li>
             {user && user.uloga === 'admin' && ( // Provera da li je korisnik admin
+            <>
               <li><Link to="/dodaj-proizvod">Dodaj Proizvod</Link></li>
+              <li><Link to="/adminproizvodi">Admin </Link></li>
+              </>
             )}
             {!user ? (
               <>
