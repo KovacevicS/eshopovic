@@ -2,28 +2,42 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './FinalizacijaNarudzbine.css';
+import { useAuth } from '../login/auth';
 
 const FinalizacijaNarudzbine = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [transakcijaData, setTransakcijaData] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (state) {
-            // Ako postoje podaci u state-u
-            setTransakcijaData(state);
+            // Postavljanje podataka o korpi i ukupnoj ceni
+            setTransakcijaData({
+                ...state,
+                ime: user.ime || state.ime,
+                prezime: user.prezime || state.prezime,
+                email: user.email || state.email,
+                adresa: user.adresa || state.adresa,
+                telefon: user.telefon || state.telefon
+            });
             setLoading(false);
         } else {
             navigate('/korpa'); // Ako nema podataka, vrati na stranicu sa korpom
         }
-    }, [state, navigate]);
+    }, [state, navigate, user]);
 
     const handleZavrsiNarudzbinu = async () => {
         try {
             await axios.post('http://localhost:5000/api/transakcije', {
-                korisnik_id: transakcijaData.userId,
-                proizvodi: transakcijaData.korpa,
+                korisnik_id: user.id,
+                proizvodi: transakcijaData.korpa.map(proizvod => ({
+                    id: proizvod.id,
+                    ime: proizvod.ime,
+                    cena: proizvod.cena,
+                    kolicina: proizvod.kolicina
+                })),
                 ime: transakcijaData.ime,
                 prezime: transakcijaData.prezime,
                 adresa: transakcijaData.adresa,
@@ -54,7 +68,7 @@ const FinalizacijaNarudzbine = () => {
             <ul>
                 {transakcijaData.korpa && transakcijaData.korpa.map((proizvod) => (
                     <li key={proizvod.id}>
-                        {proizvod.ime} - {proizvod.cena} RSD
+                        {proizvod.ime} - {proizvod.cena} RSD - Količina: {proizvod.kolicina}
                     </li>
                 ))}
             </ul>

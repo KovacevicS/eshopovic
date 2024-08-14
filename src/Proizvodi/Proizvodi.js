@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Proizvodi.css"; // Povezivanje CSS fajla
+import "./Proizvodi.css";
 import { useNavigate } from "react-router-dom";
 
-const Tabela = () => {
+const Tabela = ({ dodajUKorpu }) => {
   const [proizvodi, setProizvodi] = useState([]);
   const navigate = useNavigate();
 
@@ -11,8 +11,9 @@ const Tabela = () => {
     const fetchProizvodi = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/proizvodi");
-        console.log(response.data); // Proveri da li stižu podaci
-        setProizvodi(response.data);
+        console.log(response.data);
+        const filtriraniProizvodi = response.data.filter(proizvod => proizvod.kolicina > 0);
+        setProizvodi(filtriraniProizvodi);
       } catch (error) {
         console.error("Greška prilikom preuzimanja proizvoda:", error);
       }
@@ -23,6 +24,12 @@ const Tabela = () => {
 
   const handleViseOProizvodu = (proizvod) => {
     navigate(`/proizvodi/${proizvod.id}`, { state: proizvod });
+  };
+
+  const handleDodajUKorpu = (proizvod) => {
+    if (dodajUKorpu) {
+      dodajUKorpu(proizvod);
+    }
   };
 
   return (
@@ -40,6 +47,12 @@ const Tabela = () => {
                 className="proizvod-vise-btn"
               >
                 Više o proizvodu
+              </button>
+              <button
+                onClick={() => handleDodajUKorpu(proizvod)}
+                className="proizvod-dodaj-btn"
+              >
+                Dodaj u korpu
               </button>
             </div>
           ))

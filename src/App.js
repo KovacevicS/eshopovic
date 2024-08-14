@@ -36,7 +36,7 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Pocetna />} />
-                <Route path="/proizvodi" element={<Tabela />} />
+                <Route path="/proizvodi" element={<Tabela dodajUKorpu={dodajUKorpu} />} />
                 <Route path="/dodaj-proizvod" element={<DodajProizvod />} />
                 <Route path="/edit-proizvoda/:id" element={<EditProizvoda />} />
                 <Route path="/delete-proizvoda/:id" element={<DeleteProizvoda />} />
