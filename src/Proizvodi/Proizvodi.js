@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Proizvodi.css"; // Povezivanje CSS fajla
 import { useNavigate } from "react-router-dom";
+
 const Tabela = () => {
   const [proizvodi, setProizvodi] = useState([]);
   const navigate = useNavigate();
@@ -26,28 +27,26 @@ const Tabela = () => {
 
   return (
     <div className="proizvodi-container">
-      {proizvodi.length > 0 ? (
-        proizvodi.map((proizvod, index) => (
-          <div key={index} className="proizvod-kartica">
-            {
-              <>
-                <h3 className="proizvod-ime">{proizvod.ime}</h3>
-                <img src={proizvod.slika} alt={proizvod.ime} />
-                <p className="proizvod-opis">{proizvod.opis}</p>
-                <p className="proizvod-cena">{proizvod.cena} RSD</p>
-                <button
-                  onClick={() => handleViseOProizvodu(proizvod)}
-                  className="vise-button"
-                >
-                  Više o proizvodu
-                </button>
-              </>
-            }
-          </div>
-        ))
-      ) : (
-        <p>Nema dostupnih proizvoda.</p>
-      )}
+      <div className="proizvodi-lista">
+        {proizvodi.length > 0 ? (
+          proizvodi.map((proizvod, index) => (
+            <div key={index} className="proizvod-kartica">
+              <h3 className="proizvod-ime">{proizvod.ime}</h3>
+              <img src={proizvod.slika} alt={proizvod.ime} className="proizvod-slika" />
+              <p className="proizvod-opis">{proizvod.opis}</p>
+              <p className="proizvod-cena">{proizvod.cena} RSD</p>
+              <button
+                onClick={() => handleViseOProizvodu(proizvod)}
+                className="proizvod-vise-btn"
+              >
+                Više o proizvodu
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>Nema dostupnih proizvoda.</p>
+        )}
+      </div>
     </div>
   );
 };

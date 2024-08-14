@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Korpa.css'; // Import CSS
 
 const Korpa = ({ korpa, ukloniIzKorpe }) => {
     const navigate = useNavigate();
@@ -14,21 +15,31 @@ const Korpa = ({ korpa, ukloniIzKorpe }) => {
     };
 
     return (
-        <div>
-            <h1>Vaša Korpa</h1>
+        <div className="korpa-container">
+            <h1 className="korpa-header">Vaša Korpa</h1>
             {korpa.length === 0 ? (
-                <p>Vaša korpa je prazna.</p>
+                <p className="korpa-empty">Vaša korpa je prazna.</p>
             ) : (
-                <ul>
+                <ul className="korpa-list">
                     {korpa.map(proizvod => (
-                        <li key={proizvod.id}>
+                        <li key={proizvod.id} className="korpa-item">
                             {proizvod.ime} - {proizvod.cena} RSD
-                            <button onClick={() => handleRemove(proizvod.id)}>Ukloni</button>
+                            <button 
+                                className="korpa-remove-button"
+                                onClick={() => handleRemove(proizvod.id)}
+                            >
+                                Ukloni
+                            </button>
                         </li>
                     ))}
                 </ul>
             )}
-            <button onClick={handleCheckout}>Nastavi na plaćanje</button>
+            <button 
+                className="korpa-checkout-button"
+                onClick={handleCheckout}
+            >
+                Nastavi na plaćanje
+            </button>
         </div>
     );
 };

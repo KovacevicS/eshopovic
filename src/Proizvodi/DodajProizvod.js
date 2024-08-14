@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './DodajProizvod.css';
 
 const DodajProizvod = () => {
     const [imeProizvoda, setImeProizvoda] = useState('');
@@ -28,7 +29,7 @@ const DodajProizvod = () => {
     };
 
     return (
-        <div>
+        <div className="dodaj-proizvod-container">
             <h2>Dodaj novi proizvod</h2>
             <input
                 type="text"
@@ -55,7 +56,7 @@ const DodajProizvod = () => {
                 onChange={e => setSlikaProizvoda(e.target.value)}
             />
             <button onClick={dodajProizvod}>Dodaj proizvod</button>
-            {poruka && <p>{poruka}</p>}
+            {poruka && <p className={poruka.includes('uspešno') ? 'success' : 'error'}>{poruka}</p>}
         </div>
     );
 };

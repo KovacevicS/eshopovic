@@ -20,19 +20,19 @@ const Navbar = () => {
             <li><Link to="/">Početna</Link></li>
             <li><Link to="/proizvodi">Proizvodi</Link></li>
             <li><Link to="/korpa">Korpa</Link></li>
-            {user && user.uloga === 'admin' && ( // Provera da li je korisnik admin
-            <>
-              <li><Link to="/dodaj-proizvod">Dodaj Proizvod</Link></li>
-              <li><Link to="/adminproizvodi">Admin </Link></li>
+            {user && user.uloga === 'admin' && (
+              <>
+                <li><Link to="/dodaj-proizvod">Dodaj Proizvod</Link></li>
+                <li><Link to="/adminproizvodi">Admin</Link></li>
               </>
             )}
             {!user ? (
               <>
                 <li><Link to="/login">Login</Link></li>
-                <li><Link to="/Signup">Signup</Link></li>
+                <li><Link to="/signup">Signup</Link></li>
               </>
             ) : (
-              <li><button onClick={logout}>Logout</button></li>
+              <li><button onClick={logout} className="logout-button">Logout</button></li>
             )}
           </ul>
         </nav>

@@ -1,56 +1,76 @@
-/* Osnovni stilovi */
+/* Navbar.css */
+
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    background-color: #fff;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #007bff;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px; /* Dodao sam padding kako bi My E-Shop bio dalje od ivice */
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 1200px;
+  margin: 10px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  color: #007bff;
+  margin-left: 20px; /* Razmak između logotipa i navigacije */
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px; /* Razmak između linkova */
+}
+
+.nav li {
+  margin: auto;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+}
+
+.nav a:hover {
+  color: #007bff; /* Jednostavan hover efekat */
+}
+
+.logout-button {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 20px;
+}
+
+.logout-button:hover {
+  background-color: #c82333; /* Jednostavan hover efekat */
+}
+
+/* Stilovi za manje ekrane */
+@media (max-width: 768px) {
   .nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-  }
-  
-  .nav li {
-    margin-left: 20px;
-  }
-  
-  .nav a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s;
-  }
-  
-  .nav a:hover {
-    color: #007bff;
-  }
-  
-  /* Stilovi za manje ekrane */
-  @media (max-width: 768px) {
-    .nav {
       flex-direction: column;
       align-items: flex-start;
-      position: relative;
-    }
-  
-    .nav ul {
+  }
+
+  .nav ul {
       display: none;
       flex-direction: column;
       width: 100%;
@@ -58,33 +78,31 @@
       background-color: #fff;
       border-top: 1px solid #ddd;
       margin-top: 10px;
-    }
-  
-    .nav.active ul {
+  }
+
+  .nav.active ul {
       display: flex;
-    }
-  
-    .nav li {
-      margin-left: 0;
+  }
+
+  .nav li {
+      margin: 0;
       margin-bottom: 10px;
-    }
-  
-    .nav a {
+  }
+
+  .nav a {
       font-size: 18px;
-      color: #333;
-    }
-  
-    .menu-toggle {
+  }
+
+  .menu-toggle {
       display: block;
       cursor: pointer;
       font-size: 24px;
-    }
   }
-  
-  /* Sakrij hamburger meni za veće ekrane */
-  @media (min-width: 769px) {
-    .menu-toggle {
+}
+
+/* Sakrij hamburger meni za veće ekrane */
+@media (min-width: 769px) {
+  .menu-toggle {
       display: none;
-    }
   }
-  
+}
