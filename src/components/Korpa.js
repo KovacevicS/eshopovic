@@ -29,23 +29,28 @@ const Korpa = ({ korpa, ukloniIzKorpe }) => {
         fetchProizvodi();
     }, [korpa]);
 
-    const handleQuantityChange = (id, event) => {
-        const newQuantity = Math.min(parseInt(event.target.value, 10), proizvodi.find(p => p.id === id)?.dostupnaKolicina || 0);
-        const updatedProizvodi = proizvodi.map(proizvod => {
-            if (proizvod.id === id) {
-                return { ...proizvod, kolicina: newQuantity };
-            }
-            return proizvod;
-        });
-        setProizvodi(updatedProizvodi);
-    };
-
     const handleRemove = (id) => {
         ukloniIzKorpe(id);
     };
 
     const handleCheckout = () => {
-        navigate('/checkout', { state: { korpa: proizvodi } });
+        const korpaZaPlacanje = proizvodi.map(proizvod => ({
+            ime: proizvod.ime,
+            cena: proizvod.cena,
+            kolicina: proizvod.kolicina
+        }));
+console.log(korpaZaPlacanje)
+        navigate('/checkout', { state: { korpaZaPlacanje } });
+    };
+    const handleIzabranaKolicina = (id, event) => {
+        const novaKolicina = parseInt(event.target.value, 10);
+        setProizvodi(prevProizvodi =>
+            prevProizvodi.map(proizvod =>
+                proizvod.id === id
+                    ? { ...proizvod, kolicina: novaKolicina }
+                    : proizvod
+            )
+        );
     };
 
     return (
@@ -63,7 +68,7 @@ const Korpa = ({ korpa, ukloniIzKorpe }) => {
                                 min="1"
                                 max={proizvod.dostupnaKolicina}
                                 value={proizvod.kolicina || 1}
-                                onChange={(event) => handleQuantityChange(proizvod.id, event)}
+                                onChange={(event) => handleIzabranaKolicina(proizvod.id, event)}
                                 className="korpa-quantity-input"
                             />
                             <button 

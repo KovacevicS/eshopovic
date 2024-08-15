@@ -12,8 +12,7 @@ const FinalizacijaNarudzbine = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (state) {
-            // Postavljanje podataka o korpi i ukupnoj ceni
+        if (state && state.korpa) {
             setTransakcijaData({
                 ...state,
                 ime: user.ime || state.ime,
@@ -27,11 +26,27 @@ const FinalizacijaNarudzbine = () => {
             navigate('/korpa'); // Ako nema podataka, vrati na stranicu sa korpom
         }
     }, [state, navigate, user]);
+    
 
     const handleZavrsiNarudzbinu = async () => {
         try {
+            console.log('Sending data:', {
+                id: user.id,
+                proizvodi: transakcijaData.korpa.map(proizvod => ({
+                    ime: proizvod.ime,
+                    cena: proizvod.cena,
+                    kolicina: proizvod.kolicina
+                })),
+                ime: transakcijaData.ime,
+                prezime: transakcijaData.prezime,
+                adresa: transakcijaData.adresa,
+                email: transakcijaData.email,
+                telefon: transakcijaData.telefon,
+                datum_transakcije: new Date().toISOString(), // Dodaje trenutni datum i vreme
+            });
+    
             await axios.post('http://localhost:5000/api/transakcije', {
-                korisnik_id: user.id,
+                id: user.id,
                 proizvodi: transakcijaData.korpa.map(proizvod => ({
                     id: proizvod.id,
                     ime: proizvod.ime,
@@ -50,11 +65,11 @@ const FinalizacijaNarudzbine = () => {
             console.error('Greška pri slanju podataka:', error);
         }
     };
-
+    
     if (loading) {
         return <p>Učitavanje...</p>;
     }
-
+console.log(transakcijaData)
     return (
         <div className="finalizacija-narudzbine-container">
             <h1>Finalizacija Narudžbine</h1>

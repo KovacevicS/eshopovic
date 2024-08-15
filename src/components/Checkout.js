@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation za pristup state
 import './Checkout.css';
 
-const Checkout = ({ korpa }) => {
+const Checkout = () => {
     const [user, setUser] = useState(null); // Pretpostavljamo da ovo odražava trenutno ulogovanog korisnika
     const [formData, setFormData] = useState({
         ime: '',
@@ -13,6 +13,7 @@ const Checkout = ({ korpa }) => {
     });
 
     const navigate = useNavigate();
+    const location = useLocation(); // Koristi useLocation za pristup state
 
     useEffect(() => {
         // Simulacija provere da li je korisnik ulogovan
@@ -29,23 +30,29 @@ const Checkout = ({ korpa }) => {
         }));
     };
 
-
-
     const handleNapraviNalog = () => {
         navigate('/signup');
     };
 
-    const handleNastaviSaPodacima = () => {
-        navigate('/zavrsi', { state: { ...formData, korpa } });
-    };
+    const handleNastaviSaPodacima = (e) => {
+        e.preventDefault(); // Sprečava podrazumevano ponašanje forme
+        
+        const korpaZaPlacanje = location.state?.korpaZaPlacanje || []; // Uzmemo korpu iz state
 
+        navigate('/zavrsi', {
+            state: {
+                ...formData,
+                korpa: korpaZaPlacanje
+            }
+        });
+    };
     return (
         <div className="checkout-container">
             {user ? (
                 <div>
                     <h1>Podaci o korisniku</h1>
                     <button onClick={() => navigate('/edit-profile')}>Izmeni podatke</button>
-                    <button onClick={() => handleNastaviSaPodacima()}>Poruci</button>
+                    <button onClick={handleNastaviSaPodacima}>Poruci</button>
                 </div>
             ) : (
                 <form onSubmit={handleNastaviSaPodacima} className="checkout-form">
