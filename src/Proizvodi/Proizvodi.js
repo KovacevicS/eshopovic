@@ -3,15 +3,15 @@ import axios from "axios";
 import "./Proizvodi.css";
 import { useNavigate } from "react-router-dom";
 
-const Tabela = ({ dodajUKorpu }) => {
+const Tabela = ({ dodajUKorpu, ukloniIzKorpe }) => {
   const [proizvodi, setProizvodi] = useState([]);
+  const [korpaProizvodi, setKorpaProizvodi] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProizvodi = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/proizvodi");
-        console.log(response.data);
         const filtriraniProizvodi = response.data.filter(proizvod => proizvod.kolicina > 0);
         setProizvodi(filtriraniProizvodi);
       } catch (error) {
@@ -27,10 +27,16 @@ const Tabela = ({ dodajUKorpu }) => {
   };
 
   const handleDodajUKorpu = (proizvod) => {
-    if (dodajUKorpu) {
-      dodajUKorpu(proizvod);
-    }
+    dodajUKorpu({ ...proizvod, kolicina: 1 });
+    setKorpaProizvodi(prev => [...prev, proizvod.id]);
   };
+
+  const handleIzbaciIzKorpe = (proizvod) => {
+    ukloniIzKorpe(proizvod.id);
+    setKorpaProizvodi(prev => prev.filter(id => id !== proizvod.id));
+  };
+
+  const isProizvodUKorpi = (id) => korpaProizvodi.includes(id);
 
   return (
     <div className="proizvodi-container">
@@ -48,12 +54,21 @@ const Tabela = ({ dodajUKorpu }) => {
               >
                 Više o proizvodu
               </button>
-              <button
-                onClick={() => handleDodajUKorpu(proizvod)}
-                className="proizvod-dodaj-btn"
-              >
-                Dodaj u korpu
-              </button>
+              {isProizvodUKorpi(proizvod.id) ? (
+                <button
+                  onClick={() => handleIzbaciIzKorpe(proizvod)}
+                  className="proizvod-izbaci-btn"
+                >
+                  Izbaci iz korpe
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleDodajUKorpu(proizvod)}
+                  className="proizvod-dodaj-btn"
+                >
+                  Dodaj u korpu
+                </button>
+              )}
             </div>
           ))
         ) : (

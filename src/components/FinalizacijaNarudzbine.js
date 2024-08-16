@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './FinalizacijaNarudzbine.css';
-import { useAuth } from '../login/auth';
 
 const FinalizacijaNarudzbine = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
-    const { user } = useAuth();
     const [transakcijaData, setTransakcijaData] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -15,38 +13,27 @@ const FinalizacijaNarudzbine = () => {
         if (state && state.korpa) {
             setTransakcijaData({
                 ...state,
-                ime: user.ime || state.ime,
-                prezime: user.prezime || state.prezime,
-                email: user.email || state.email,
-                adresa: user.adresa || state.adresa,
-                telefon: user.telefon || state.telefon
+                ime: state.ime,
+                prezime: state.prezime,
+                email: state.email,
+                adresa: state.adresa,
+                telefon: state.telefon,
+                ukupnaCena: state.ukupnaCena,
+                ukupnaCenaSaPopustom: state.ukupnaCenaSaPopustom
             });
             setLoading(false);
         } else {
             navigate('/korpa'); // Ako nema podataka, vrati na stranicu sa korpom
         }
-    }, [state, navigate, user]);
-    
+    }, [state, navigate]);
+
+    // Izračunavanje ukupne cene sa popustom
+    const ukupnaCena = transakcijaData.ukupnaCena || 0;
+    const ukupnaCenaSaPopustom = transakcijaData.ukupnaCenaSaPopustom || ukupnaCena;
 
     const handleZavrsiNarudzbinu = async () => {
         try {
-            console.log('Sending data:', {
-                id: user.id,
-                proizvodi: transakcijaData.korpa.map(proizvod => ({
-                    ime: proizvod.ime,
-                    cena: proizvod.cena,
-                    kolicina: proizvod.kolicina
-                })),
-                ime: transakcijaData.ime,
-                prezime: transakcijaData.prezime,
-                adresa: transakcijaData.adresa,
-                email: transakcijaData.email,
-                telefon: transakcijaData.telefon,
-                datum_transakcije: new Date().toISOString(), // Dodaje trenutni datum i vreme
-            });
-    
-            await axios.post('http://localhost:5000/api/transakcije', {
-                id: user.id,
+            console.log('Podaci koji se šalju:', {
                 proizvodi: transakcijaData.korpa.map(proizvod => ({
                     id: proizvod.id,
                     ime: proizvod.ime,
@@ -58,18 +45,35 @@ const FinalizacijaNarudzbine = () => {
                 adresa: transakcijaData.adresa,
                 email: transakcijaData.email,
                 telefon: transakcijaData.telefon,
-                datum_transakcije: new Date().toISOString(), // Dodaje trenutni datum i vreme
+                datum_transakcije: new Date().toISOString(),
             });
-            navigate('/zahvalnica'); // Nakon uspešnog slanja, preusmeri na stranicu sa zahvalnicom
+    
+            await axios.post('http://localhost:5000/api/transakcije', {
+                proizvodi: transakcijaData.korpa.map(proizvod => ({
+                    id: proizvod.id,
+                    ime: proizvod.ime,
+                    cena: proizvod.cena,
+                    kolicina: proizvod.kolicina
+                })),
+                ime: transakcijaData.ime,
+                prezime: transakcijaData.prezime,
+                adresa: transakcijaData.adresa,
+                email: transakcijaData.email,
+                telefon: transakcijaData.telefon,
+                datum_transakcije: new Date().toISOString(),
+            });
+            navigate('/zahvalnica');
         } catch (error) {
             console.error('Greška pri slanju podataka:', error);
+            console.log('Detalji greške:', error.response?.data);
         }
     };
     
+
     if (loading) {
         return <p>Učitavanje...</p>;
     }
-console.log(transakcijaData)
+
     return (
         <div className="finalizacija-narudzbine-container">
             <h1>Finalizacija Narudžbine</h1>
@@ -78,16 +82,17 @@ console.log(transakcijaData)
             <p>Prezime: {transakcijaData.prezime}</p>
             <p>Email: {transakcijaData.email}</p>
             <p>Adresa: {transakcijaData.adresa}</p>
+            <p>Telefon: {transakcijaData.telefon}</p>
 
             <h2>Vaša Narudžbina</h2>
             <ul>
                 {transakcijaData.korpa && transakcijaData.korpa.map((proizvod) => (
                     <li key={proizvod.id}>
-                        {proizvod.ime} - {proizvod.cena} RSD - Količina: {proizvod.kolicina}
+                        {proizvod.ime} -Redovna cena {proizvod.cena} RSD - Količina: {proizvod.kolicina}
                     </li>
                 ))}
             </ul>
-            <p>Ukupna Cena: {transakcijaData.ukupnaCena} RSD</p>
+            <p>Ukupna Cena: {ukupnaCenaSaPopustom} RSD</p>
 
             <button onClick={handleZavrsiNarudzbinu}>Završi</button>
         </div>

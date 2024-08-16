@@ -53,20 +53,31 @@
     background-color: #c82333;
 }
 
-.korpa-checkout-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
+
+
+
+.korpa-discount {
     margin-top: 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.korpa-checkout-button:hover {
-    background-color: #218838;
+.korpa-discount-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.korpa-apply-discount-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.korpa-apply-discount-button:disabled {
+    background-color: #6c757d;
 }
