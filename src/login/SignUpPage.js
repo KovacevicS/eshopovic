@@ -135,7 +135,7 @@ const SignUpPage = () => {
 
             <MDBInput
               wrapperClass="mb-4"
-              label="Adresa"
+              label="telefon"
               id="form6"
               type="text"
               value={telefon}
@@ -145,7 +145,7 @@ const SignUpPage = () => {
 
             <MDBInput
               wrapperClass="mb-4"
-              label="Telefon"
+              label="adresa"
               id="form5"
               type="text"
               value={adresa}

@@ -12,14 +12,20 @@ const FinalizacijaNarudzbine = () => {
     useEffect(() => {
         if (state && state.korpa) {
             setTransakcijaData({
-                ...state,
                 ime: state.ime,
                 prezime: state.prezime,
                 email: state.email,
                 adresa: state.adresa,
                 telefon: state.telefon,
-                ukupnaCena: state.ukupnaCena,
-                ukupnaCenaSaPopustom: state.ukupnaCenaSaPopustom
+                datum_transakcije: new Date().toISOString(),
+                izabranih_proizovda: state.korpa.length,  // Broj izabranih proizvoda
+                proizvodi: state.korpa.map(proizvod => ({
+                    id: proizvod.id,
+                    ime: proizvod.ime,
+                    cena: proizvod.cena,
+                    kolicina: proizvod.kolicina,
+                    popust: proizvod.popust || proizvod.cena // Ako postoji popust, koristite ga, inače redovna cena
+                }))
             });
             setLoading(false);
         } else {
@@ -27,42 +33,25 @@ const FinalizacijaNarudzbine = () => {
         }
     }, [state, navigate]);
 
-    // Izračunavanje ukupne cene sa popustom
-    const ukupnaCena = transakcijaData.ukupnaCena || 0;
-    const ukupnaCenaSaPopustom = transakcijaData.ukupnaCenaSaPopustom || ukupnaCena;
-
     const handleZavrsiNarudzbinu = async () => {
         try {
-            console.log('Podaci koji se šalju:', {
-                proizvodi: transakcijaData.korpa.map(proizvod => ({
-                    id: proizvod.id,
-                    ime: proizvod.ime,
-                    cena: proizvod.cena,
-                    kolicina: proizvod.kolicina
-                })),
-                ime: transakcijaData.ime,
-                prezime: transakcijaData.prezime,
-                adresa: transakcijaData.adresa,
-                email: transakcijaData.email,
-                telefon: transakcijaData.telefon,
-                datum_transakcije: new Date().toISOString(),
-            });
+            const { ime, prezime, email, adresa, telefon, datum_transakcije, proizvodi } = transakcijaData;
     
-            await axios.post('http://localhost:5000/api/transakcije', {
-                proizvodi: transakcijaData.korpa.map(proizvod => ({
-                    id: proizvod.id,
-                    ime: proizvod.ime,
-                    cena: proizvod.cena,
-                    kolicina: proizvod.kolicina
-                })),
-                ime: transakcijaData.ime,
-                prezime: transakcijaData.prezime,
-                adresa: transakcijaData.adresa,
-                email: transakcijaData.email,
-                telefon: transakcijaData.telefon,
-                datum_transakcije: new Date().toISOString(),
-            });
-            navigate('/zahvalnica');
+            if (!ime || !prezime || !email || !adresa || !telefon || !datum_transakcije || !proizvodi) {
+                throw new Error('Neka obavezna polja nedostaju');
+            }
+    
+            // Konvertovanje ISO 8601 datuma u MySQL DATETIME format
+            const formattedDate = new Date(datum_transakcije).toISOString().slice(0, 19).replace('T', ' ');
+    
+            const dataToSend = {
+                ...transakcijaData,
+                datum_transakcije: formattedDate,
+            };
+    
+            console.log('Podaci koji se šalju:', dataToSend);
+    
+            await axios.post('http://localhost:5000/api/transakcije', dataToSend);
         } catch (error) {
             console.error('Greška pri slanju podataka:', error);
             console.log('Detalji greške:', error.response?.data);
@@ -86,13 +75,13 @@ const FinalizacijaNarudzbine = () => {
 
             <h2>Vaša Narudžbina</h2>
             <ul>
-                {transakcijaData.korpa && transakcijaData.korpa.map((proizvod) => (
+                {transakcijaData.proizvodi && transakcijaData.proizvodi.map((proizvod) => (
                     <li key={proizvod.id}>
-                        {proizvod.ime} -Redovna cena {proizvod.cena} RSD - Količina: {proizvod.kolicina}
+                        {proizvod.ime} - Cena: {proizvod.popust} RSD - Količina: {proizvod.kolicina}
                     </li>
                 ))}
             </ul>
-            <p>Ukupna Cena: {ukupnaCenaSaPopustom} RSD</p>
+            <p>Ukupno izabranih proizvoda: {transakcijaData.izabranih_proizovda}</p>
 
             <button onClick={handleZavrsiNarudzbinu}>Završi</button>
         </div>

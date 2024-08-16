@@ -26,6 +26,9 @@ const Navbar = () => {
                 <li><Link to="/adminproizvodi">Admin</Link></li>
               </>
             )}
+            {user && user.uloga === 'kupac' && (
+              <li><Link to="/transakcije">Moje Transakcije</Link></li>
+            )}
             {!user ? (
               <>
                 <li><Link to="/login">Login</Link></li>

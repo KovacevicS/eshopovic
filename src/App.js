@@ -18,6 +18,7 @@ import Checkout from "./components/Checkout";
 import FinalizacijaNarudzbine from "./components/FinalizacijaNarudzbine";
 import AdminProizvodi from "./Proizvodi/AdminProzivodi";
 import Kodzapopust from "./components/Kodzapopust";
+import TransakcijaPrikaz from "./components/Transakcije"
 
 function App() {
   const [korpa, setKorpa] = useState([]);
@@ -59,6 +60,7 @@ function App() {
           <Route path="/zavrsi" element={<FinalizacijaNarudzbine />} />
           <Route path="/adminproizvodi" element={<AdminProizvodi />} />
           <Route path="/kodzapopust" element={<Kodzapopust />} />
+          <Route path="/transakcije" element={<TransakcijaPrikaz/>}/>
         </Routes>
       </AuthProvider>
     </Router>
