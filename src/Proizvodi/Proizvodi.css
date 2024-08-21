@@ -1,76 +1,218 @@
 /* Proizvodi.css */
 
 .proizvodi-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f8f9fa;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  font-family: "Bai Jamjuree", sans-serif;
+
 }
 
-.filter-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+.proizvodi-pretraga {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.filter-container input {
-    padding: 10px;
-    font-size: 16px;
-    width: 48%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.sortiranje-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.sortiraj-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: white 1px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sortiraj-btn:hover {
+  border: black 1px solid;
+  background-color: transparent;
 }
 
 .proizvodi-lista {
-    display: flex;
-    flex-wrap: wrap; /* Omogućava prelazak u novi red kada je potrebno */
-    gap: 20px; /* Razmak između proizvoda */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .proizvod-kartica {
-    width: calc(33.333% - 20px); /* Tri proizvoda u jednom redu, minus razmak između proizvoda */
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
+  width: calc(33.333% - 20px);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.proizvod-kartica:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .proizvod-slika {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+  width: 60%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .proizvod-ime {
-    margin: 15px 0 10px;
-    font-size: 18px;
-    color: #333;
+  margin: 10px 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
 }
 
-.proizvod-cena-stara {
-    text-decoration: line-through;
-    color: #999;
-    margin-bottom: 5px;
+.proizvod-opis {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
 }
 
-.proizvod-cena-nova {
-    font-size: 20px;
-    color: #b30000;
-    font-weight: bold;
+.proizvod-cena {
+  font-size: 18px;
+  color: #e74c3c;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.proizvod-vise-btn,
+.proizvod-dodaj-btn,
+.proizvod-izbaci-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
 }
 
 .proizvod-vise-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
 }
 
 .proizvod-vise-btn:hover {
-    background: #0056b3;
+  background-color: #0056b3;
+}
+
+.proizvod-dodaj-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.proizvod-dodaj-btn:hover {
+  background-color: #218838;
+}
+
+.proizvod-izbaci-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.proizvod-izbaci-btn:hover {
+  background-color: #c82333;
+}
+
+/* Korpa - sidebar */
+.korpa-container-proizvod {
+  width: 300px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  height: 80vh;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.korpa-container-proizvod h5 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+  color: #333;
+}
+
+.korpa-container-proizvod ul {
+  list-style-type: none;
+  padding-left: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.korpa-container-proizvod li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #665;
+}
+
+.idi-u-korpu-btn {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  align-self: center;
+}
+
+.idi-u-korpu-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive dizajn */
+@media (max-width: 992px) {
+  .proizvod-kartica {
+      width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .proizvod-kartica {
+      width: calc(100% - 20px);
+  }
+
+  .sortiranje-container {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .korpa-container-proizvod {
+      width: 100%;
+      height: auto;
+      box-shadow: none;
+      position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .proizvodi-pretraga,
+  .sortiraj-btn,
+  .idi-u-korpu-btn {
+      width: 100%;
+  }
 }

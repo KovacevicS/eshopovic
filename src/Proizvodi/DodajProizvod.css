@@ -5,7 +5,8 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+    font-family: "Bai Jamjuree", sans-serif;
+
 }
 
 .dodaj-proizvod-container h2 {
@@ -63,4 +64,10 @@
 
 .dodaj-proizvod-container p.error {
     color: red;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }

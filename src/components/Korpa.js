@@ -1,9 +1,10 @@
+// src/Korpa.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Korpa.css";
 
-const Korpa = ({ korpa, ukloniIzKorpe }) => {
+const Korpa = ({ korpa, ukloniIzKorpe, isprazniKorpu }) => {
   const [proizvodi, setProizvodi] = useState([]);
   const [discountCode, setDiscountCode] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -39,6 +40,7 @@ const Korpa = ({ korpa, ukloniIzKorpe }) => {
   const handleRemove = (id) => {
     ukloniIzKorpe(id);
   };
+
 
   const handleIzabranaKolicina = (id, event) => {
     const novaKolicina = parseInt(event.target.value, 10);
@@ -140,7 +142,15 @@ const Korpa = ({ korpa, ukloniIzKorpe }) => {
       </div>
       <button
         className="korpa-checkout-button"
-        onClick={() => navigate("/checkout", { state: { proizvodi: formatProizvodi, ukupnaCena: ukupnaCena, ukupnaCenaSaPopustom } })}
+        onClick={() =>
+          navigate("/checkout", {
+            state: {
+              proizvodi: formatProizvodi,
+              ukupnaCena: ukupnaCena,
+              ukupnaCenaSaPopustom,
+            },
+          })
+        }
         disabled={proizvodi.length === 0}
       >
         Nastavi na plaćanje
