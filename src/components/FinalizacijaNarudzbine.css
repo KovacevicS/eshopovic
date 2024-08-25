@@ -1,31 +1,33 @@
-/* Osnovni stilovi za finalizaciju narudžbine */
 .finalizacija-narudzbine-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: "Bai Jamjuree", sans-serif;
-
+    padding: 25px;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
 }
 
+
 .finalizacija-narudzbine-container h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 10px;
 }
 
 .finalizacija-narudzbine-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #444;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #34495e;
 }
 
 .finalizacija-narudzbine-container p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #7f8c8d;
 }
 
 .finalizacija-narudzbine-container ul {
@@ -34,24 +36,62 @@
 }
 
 .finalizacija-narudzbine-container li {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #ecf0f1;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.finalizacija-narudzbine-container li:hover {
+    background-color: #e0e0e0;
 }
 
 .finalizacija-narudzbine-container button {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 12px 25px;
+    font-size: 1.1rem;
     color: #fff;
-    background-color: #007bff;
+    background-color: #e74c3c;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 25px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    position: sticky;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 .finalizacija-narudzbine-container button:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
+    background-color: #c0392b;
+}
+
+.user-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.order-info {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.proizvod-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.proizvod-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
